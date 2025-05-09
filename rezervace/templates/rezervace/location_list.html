@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Seznam Lokací</title>
+</head>
+
+<body>
+    <h1>Seznam Lokací</h1>
+    <ul>
+        {% for location in locations %}
+        <li>
+            <strong>{{ location.name }}</strong> ({{ location.city }})<br>
+            Adresa: {{ location.address }}<br>
+            <ul>
+                <li>Antukové kurty: {{ location.clay_courts }}</li>
+                <li>Travnaté kurty: {{ location.grass_courts }}</li>
+                <li>Tvrdé kurty: {{ location.hard_courts }}</li>
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
