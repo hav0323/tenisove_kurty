@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Location, Court
+from .models import Location, Court, Tournament
 
 class CourtInline(admin.TabularInline):
     model = Court
@@ -10,3 +10,9 @@ class CourtInline(admin.TabularInline):
 class LocationAdmin(admin.ModelAdmin):
     list_display = ('name', 'city', 'clay_courts', 'grass_courts', 'hard_courts')
     inlines = [CourtInline]
+
+@admin.register(Tournament)
+class TournamentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'location', 'date', 'capacity')
+    list_filter = ('location', 'date')
+    search_fields = ('name',)

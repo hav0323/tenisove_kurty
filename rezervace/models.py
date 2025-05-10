@@ -39,7 +39,7 @@ class Court(models.Model):
     ])
 
     def __str__(self):
-        return f"{self.name} - {self.location.name}"
+        return self.name 
     
 class Reservation(models.Model):
     TIME_SLOTS = [
@@ -67,3 +67,50 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f"Reservation for {self.court.name} by {self.name} on {self.date} at {self.time_slot}"
+
+
+class Review(models.Model):
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        related_name="reviews",
+        verbose_name="Location"
+    )  # Propojení recenze na lokaci
+    name = models.CharField(max_length=100, verbose_name="Name")  # Jméno autora recenze
+    rating = models.PositiveIntegerField(
+        verbose_name="Rating",
+        choices=[(i, str(i)) for i in range(1, 6)]  # Hodnocení od 1 do 5
+    )
+    comment = models.TextField(verbose_name="Comment")  # Text recenze
+
+    def __str__(self):
+        return f"Review by {self.name} for {self.location.name} - {self.rating} stars"
+
+
+class Tournament(models.Model):
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        related_name="tournaments",
+        verbose_name="Location"
+    )
+    name = models.CharField(max_length=100, verbose_name="Tournament Name")
+    date = models.DateField(verbose_name="Date")
+    capacity = models.PositiveIntegerField(verbose_name="Capacity")
+
+    def __str__(self):
+        return self.name
+
+
+class TournamentParticipant(models.Model):
+    tournament = models.ForeignKey(
+        Tournament,
+        on_delete=models.CASCADE,
+        related_name="participants",
+        verbose_name="Tournament"
+    )
+    name = models.CharField(max_length=100, verbose_name="Name")
+    birth_date = models.DateField(verbose_name="Date of Birth")
+
+    def __str__(self):
+        return f"{self.name} ({self.birth_date}) in {self.tournament.name}"

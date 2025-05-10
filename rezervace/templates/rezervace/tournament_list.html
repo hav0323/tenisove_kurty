@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tournament List</title>
+</head>
+
+<body>
+    <h1>Tournament List</h1>
+    <ul>
+        {% for tournament in tournaments %}
+        <li>
+            <a href="{% url 'tournament_detail' tournament.pk %}">{{ tournament.name }}</a>, {{ tournament.location.name
+            }} ({{ tournament.date|date:"F j, Y" }})
+        </li>
+        {% endfor %}
+    </ul>
+    <p>
+        <a href="{% url 'homepage' %}">Back to Homepage</a>
+    </p>
+</body>
+
+</html>

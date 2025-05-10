@@ -13,6 +13,26 @@
     <p><strong>Grass Courts:</strong> {{ location.grass_courts }}</p>
     <p><strong>Hard Courts:</strong> {{ location.hard_courts }}</p>
 
+    <h2>Reviews</h2>
+    <ul>
+        {% for review in location.reviews.all %}
+        <li>
+            <strong>{{ review.name }}</strong> ({{ review.rating }} stars): {{ review.comment }}
+            <br>
+            <small>Posted on {{ review.created_at|date:"F j, Y, g:i a" }}</small>
+        </li>
+        {% empty %}
+        <li>No reviews yet. Be the first to write one below!</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Write a Review</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
     <p>
         <a href="{% url 'location_list' %}">Back to List of Locations</a>
     </p>

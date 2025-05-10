@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ tournament.name }}</title>
+</head>
+
+<body>
+    <h1>{{ tournament.name }}</h1>
+    <p><strong>Location:</strong> {{ tournament.location.name }}</p>
+    <p><strong>Date:</strong> {{ tournament.date }}</p>
+    <p><strong>Capacity:</strong> {{ tournament.capacity }}</p>
+    <p><strong>Participants:</strong></p>
+    <ul>
+        {% for participant in tournament.participants.all %}
+        <li>{{ participant.name }} ({{ participant.birth_date }})</li>
+        {% empty %}
+        <li>No participants yet.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Register for this Tournament</h2>
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+
+    <p>
+        <a href="{% url 'tournament_list' %}">Back to Tournament List</a>
+    </p>
+</body>
+
+</html>
