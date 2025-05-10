@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home - Tennis Courts</title>
+</head>
+
+<body>
+    <h1>Welcome to the Tennis Court Reservation System</h1>
+
+    <!-- Odkaz na seznam lokací -->
+    <p>
+        <a href="{% url 'location_list' %}">View Locations</a>
+    </p>
+
+    <!-- Formulář pro vytvoření rezervace -->
+    <h2>Create a Reservation</h2>
+    <form method="post" action="{% url 'create_reservation' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Reservation</button>
+    </form>
+</body>
+
+</html>

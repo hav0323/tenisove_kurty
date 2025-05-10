@@ -1,5 +1,6 @@
 
 from django.db import models
+from django.contrib.auth.models import User
 
 class Location(models.Model):
     name = models.CharField(max_length=100)  # Název střediska
@@ -40,3 +41,13 @@ class Court(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.location.name}"
+    
+class Reservation(models.Model):
+    court = models.ForeignKey('Court', on_delete=models.CASCADE, related_name='reservations')  # Propojení na kurt
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reservations')  # Propojení na uživatele
+    date = models.DateField()  # Datum rezervace
+    time = models.TimeField()  # Čas zahájení rezervace
+    duration = models.PositiveIntegerField(default=60)  # Délka rezervace v minutách (výchozí: 60 minut)
+
+    def __str__(self):
+        return f"Reservation for {self.court.name} by {self.user.username} on {self.date} at {self.time}"

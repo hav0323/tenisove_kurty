@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rezervace import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('rezervace.urls')),
+    path('locations/', include('rezervace.urls')),  # Přesměrování do aplikace rezervace
+    path('', views.location_list, name='home'),  # Nastavení prázdné cesty jako přístup k seznamu lokací
 ]
