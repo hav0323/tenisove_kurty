@@ -21,5 +21,5 @@ from rezervace import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('locations/', include('rezervace.urls')),  # Přesměrování do aplikace rezervace
-    path('', views.location_list, name='home'),  # Nastavení prázdné cesty jako přístup k seznamu lokací
+    path('', views.homepage, name='home'),  # Nastavení prázdné cesty jako přístup k seznamu lokací
 ]

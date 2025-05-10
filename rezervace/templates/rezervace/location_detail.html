@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ location.name }}</title>
+</head>
+
+<body>
+    <h1>{{ location.name }}</h1>
+    <p><strong>Address:</strong> {{ location.address }}</p>
+    <p><strong>City:</strong> {{ location.city }}</p>
+    <p><strong>Clay Courts:</strong> {{ location.clay_courts }}</p>
+    <p><strong>Grass Courts:</strong> {{ location.grass_courts }}</p>
+    <p><strong>Hard Courts:</strong> {{ location.hard_courts }}</p>
+
+    <p>
+        <a href="{% url 'location_list' %}">Back to List of Locations</a>
+    </p>
+</body>
+
+</html>

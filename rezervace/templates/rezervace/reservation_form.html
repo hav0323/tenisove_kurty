@@ -3,15 +3,61 @@
 
 <head>
     <title>Create Reservation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
     <h1>Create Reservation</h1>
-    <form method="post">
+    <form method="post" id="reservationForm">
         {% csrf_token %}
-        {{ form.as_p }}
+        <p>
+            Location: {{ form.location }}
+        </p>
+        <p>
+            Court: {{ form.court }}
+        </p>
+        <p>
+            Date:
+            <select name="date">
+                {% for choice in form.date.field.widget.choices %}
+                <option value="{{ choice.0 }}">
+                    {{ choice.0|date:"l j.n." }} <!-- Format: Saturday 10.5. -->
+                </option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            Time Slot: {{ form.time_slot }}
+        </p>
+        <p>
+            Name: {{ form.name }}
+        </p>
+        <p>
+            Email: {{ form.email }}
+        </p>
         <button type="submit">Submit</button>
     </form>
+    <p>
+        <a href="{% url 'homepage' %}">Back to Homepage</a>
+    </p>
+
+    <script>
+        // Dynamické načítání kurtů podle zvolené lokace
+        $('#id_location').change(function () {
+            var url = "{% url 'ajax_load_courts' %}";  // URL pro AJAX
+            var locationId = $(this).val();  // Získání ID vybrané lokace
+
+            $.ajax({
+                url: url,
+                data: {
+                    'location': locationId
+                },
+                success: function (data) {
+                    $("#id_court").html(data);  // Aktualizace obsahu pole kurtů
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
