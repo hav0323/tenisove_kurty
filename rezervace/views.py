@@ -34,7 +34,7 @@ def location_detail(request, pk):
 def create_reservation(request, location_id=None):
     if location_id is None:
         # Redirect to the Select Location page if location_id is missing
-        return HttpResponseRedirect(reverse('select_location'))
+        return HttpResponseRedirect(reverse('select_location_reservation'))
 
     if request.method == 'POST':
         form = ReservationForm(request.POST, location_id=location_id)
@@ -48,13 +48,8 @@ def create_reservation(request, location_id=None):
     return render(request, 'rezervace/reservation_form.html', {'form': form})
 
 def homepage(request):
-    form = ReservationForm()
-    return render(request, 'rezervace/homepage.html', {'form': form})
+    return render(request, 'rezervace/homepage.html')
 
-def ajax_load_courts(request):
-    location_id = request.GET.get('location')  # Získání ID lokace z požadavku
-    courts = Court.objects.filter(location_id=location_id)  # Filtrování kurtů podle lokace
-    return render(request, 'rezervace/court_dropdown_list_options.html', {'courts': courts})
 
 def reservation_list(request):
     reservations = Reservation.objects.all()  # Načtení všech rezervací
@@ -132,7 +127,7 @@ def select_location(request, next_view):
         form = SelectLocationForm(request.POST)
         if form.is_valid():
             location_id = form.cleaned_data['location'].id
-            return redirect(next_view, location_id=location_id)  # Redirect to the specified view
+            return redirect(next_view, location_id=location_id)  # Přesměrování na zadaný pohled
     else:
         form = SelectLocationForm()
     return render(request, 'rezervace/select_location.html', {'form': form})

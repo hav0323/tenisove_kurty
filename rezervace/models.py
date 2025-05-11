@@ -56,8 +56,6 @@ class Reservation(models.Model):
         'Location',
         on_delete=models.CASCADE,
         verbose_name="Location",
-        null=True,  # Allow null values temporarily
-        blank=True  # Allow blank values in forms
     )
     court = models.ForeignKey('Court', on_delete=models.CASCADE, related_name='reservations', verbose_name="Court")
     name = models.CharField(max_length=100, verbose_name="Name")
