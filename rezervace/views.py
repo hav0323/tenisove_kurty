@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseRedirect
-from django import forms
 from django.urls import reverse
 from .forms import ReservationForm, ReviewForm, TournamentRegistrationForm, CreateTournamentForm, CreateLocationForm, LocationFilterForm, SelectLocationForm
 from .models import Location, Court, Reservation, Tournament, Review
@@ -90,23 +89,21 @@ def review_list(request):
     return render(request, 'rezervace/review_list.html', {'reviews': reviews})
 
 def write_review(request, location_id=None):
-    location = None
-    if location_id:
-        location = get_object_or_404(Location, pk=location_id)
+    if location_id is None:
+        # Redirect to the Select Location page if location_id is missing
+        return redirect('select_location_review')
+
+    location = get_object_or_404(Location, pk=location_id)
 
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
+        form = ReviewForm(request.POST, location_provided=True)
         if form.is_valid():
             review = form.save(commit=False)
-            if location:
-                review.location = location  # Explicitly set the location
+            review.location = location  # Explicitly set the location
             review.save()
             return redirect('review_list')  # Redirect to the review list after submission
     else:
-        form = ReviewForm()
-        if location:
-            form.fields['location'].widget = forms.HiddenInput()  # Hide the location field
-            form.fields['location'].initial = location  # Set the initial value for the location field
+        form = ReviewForm(location_provided=True)
 
     return render(request, 'rezervace/write_review.html', {'form': form, 'location': location})
 
@@ -130,12 +127,12 @@ def create_location(request):
         form = CreateLocationForm()
     return render(request, 'rezervace/create_location.html', {'form': form})
 
-def select_location(request):
+def select_location(request, next_view):
     if request.method == 'POST':
         form = SelectLocationForm(request.POST)
         if form.is_valid():
             location_id = form.cleaned_data['location'].id
-            return redirect('create_reservation', location_id=location_id)
+            return redirect(next_view, location_id=location_id)  # Redirect to the specified view
     else:
         form = SelectLocationForm()
     return render(request, 'rezervace/select_location.html', {'form': form})

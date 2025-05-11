@@ -23,6 +23,12 @@ class ReservationForm(forms.ModelForm):
         fields = ['court', 'date', 'time_slot', 'name', 'email']
 
 class ReviewForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        location_provided = kwargs.pop('location_provided', False)
+        super().__init__(*args, **kwargs)
+        if location_provided:
+            self.fields.pop('location')  # Remove the location field if it's already provided
+
     class Meta:
         model = Review
         fields = ['location', 'name', 'rating', 'comment']

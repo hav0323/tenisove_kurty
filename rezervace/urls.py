@@ -17,4 +17,7 @@ urlpatterns = [
     path('locations/create/', views.create_location, name='create_location'),
     path('reservations/select-location/', views.select_location, name='select_location'),
     path('reservations/new/<int:location_id>/', views.create_reservation, name='create_reservation'),
+    path('reservations/select-location/', views.select_location, {'next_view': 'create_reservation'}, name='select_location_reservation'),
+    path('reviews/select-location/', views.select_location, {'next_view': 'write_review'}, name='select_location_review'),
+    path('reviews/write/<int:location_id>/', views.write_review, name='write_review'),
 ]
