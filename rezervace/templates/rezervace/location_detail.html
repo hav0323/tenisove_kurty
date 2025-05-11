@@ -19,19 +19,14 @@
         <li>
             <strong>{{ review.name }}</strong> ({{ review.rating }} stars): {{ review.comment }}
             <br>
-            <small>Posted on {{ review.created_at|date:"F j, Y, g:i a" }}</small>
         </li>
         {% empty %}
         <li>No reviews yet. Be the first to write one below!</li>
         {% endfor %}
     </ul>
-
-    <h2>Write a Review</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
+    <p>
+        <a href="{% url 'write_review' location.pk %}">Write a Review for This Location</a>
+    </p>
 
     <p>
         <a href="{% url 'location_list' %}">Back to List of Locations</a>

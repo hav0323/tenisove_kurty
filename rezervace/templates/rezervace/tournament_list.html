@@ -10,13 +10,16 @@
     <ul>
         {% for tournament in tournaments %}
         <li>
-            <a href="{% url 'tournament_detail' tournament.pk %}">{{ tournament.name }}</a>, {{ tournament.location.name
-            }} ({{ tournament.date|date:"F j, Y" }})
+            <a href="{% url 'tournament_detail' tournament.pk %}">{{ tournament.name }}</a>,
+            {{ tournament.location.name }} ({{ tournament.date }})
         </li>
         {% endfor %}
     </ul>
     <p>
-        <a href="{% url 'homepage' %}">Back to Homepage</a>
+        <a href="{% url 'create_tournament' %}">Create a Tournament</a>
+    </p>
+    <p>
+        <a href="{% url 'homepage' %}">Back to Homepage</a> <!-- Přidání odkazu na hlavní stránku -->
     </p>
 </body>
 

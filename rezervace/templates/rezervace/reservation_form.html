@@ -8,7 +8,7 @@
 
 <body>
     <h1>Create Reservation</h1>
-    <form method="post" id="reservationForm">
+    <form method="post">
         {% csrf_token %}
         {% if form.non_field_errors %}
         <div class="error">
@@ -20,20 +20,10 @@
         </div>
         {% endif %}
         <p>
-            Location: {{ form.location }}
-        </p>
-        <p>
             Court: {{ form.court }}
         </p>
         <p>
-            Date:
-            <select name="date">
-                {% for choice in form.date.field.widget.choices %}
-                <option value="{{ choice.0 }}">
-                    {{ choice.0|date:"l j.n." }} <!-- Format: Saturday 10.5. -->
-                </option>
-                {% endfor %}
-            </select>
+            Date: {{ form.date }}
         </p>
         <p>
             Time Slot: {{ form.time_slot }}
@@ -47,26 +37,8 @@
         <button type="submit">Submit</button>
     </form>
     <p>
-        <a href="{% url 'homepage' %}">Back to Homepage</a>
+        <a href="{% url 'select_location' %}">Back to Location Selection</a>
     </p>
-
-    <script>
-        // Dynamické načítání kurtů podle zvolené lokace
-        $('#id_location').change(function () {
-            var url = "{% url 'ajax_load_courts' %}";  // URL pro AJAX
-            var locationId = $(this).val();  // Získání ID vybrané lokace
-
-            $.ajax({
-                url: url,
-                data: {
-                    'location': locationId
-                },
-                success: function (data) {
-                    $("#id_court").html(data);  // Aktualizace obsahu pole kurtů
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>

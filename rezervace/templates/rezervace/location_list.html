@@ -7,13 +7,24 @@
 
 <body>
     <h1>List of Locations</h1>
+
+    <!-- Formulář pro filtrování -->
+    <form method="get">
+        {{ form.as_p }}
+        <button type="submit">Filter</button>
+    </form>
+
     <ul>
         {% for location in locations %}
         <li>
-            <a href="{% url 'location_detail' location.pk %}">{{ location.name }}</a>
+            <a href="{% url 'location_detail' location.pk %}">{{ location.name }}</a> - {{ location.city }}
         </li>
         {% endfor %}
     </ul>
+
+    <p>
+        <a href="{% url 'create_location' %}">Create a Location</a>
+    </p>
     <p>
         <a href="{% url 'homepage' %}">Back to Homepage</a>
     </p>

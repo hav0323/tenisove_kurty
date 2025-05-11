@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Select Location</title>
+</head>
+
+<body>
+    <h1>Select Location</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Next</button>
+    </form>
+    <p>
+        <a href="{% url 'homepage' %}">Back to Homepage</a>
+    </p>
+</body>
+
+</html>

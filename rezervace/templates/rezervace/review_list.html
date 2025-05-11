@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Review List</title>
+</head>
+
+<body>
+    <h1>Review List</h1>
+    <ul>
+        {% for review in reviews %}
+        <li>
+            <strong>{{ review.name }}</strong> ({{ review.rating }} stars) - {{ review.location.name }}
+            <br>
+            {{ review.comment }}
+            <br>
+        </li>
+        {% empty %}
+        <li>No reviews available.</li>
+        {% endfor %}
+    </ul>
+    <p>
+        <a href="{% url 'write_review' %}">Write a Review</a>
+    </p>
+    <p>
+        <a href="{% url 'homepage' %}">Back to Homepage</a>
+    </p>
+</body>
+
+</html>

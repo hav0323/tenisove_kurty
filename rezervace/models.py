@@ -75,13 +75,19 @@ class Review(models.Model):
         on_delete=models.CASCADE,
         related_name="reviews",
         verbose_name="Location"
-    )  # Propojení recenze na lokaci
-    name = models.CharField(max_length=100, verbose_name="Name")  # Jméno autora recenze
+    )
+    name = models.CharField(max_length=100, verbose_name="Name")
     rating = models.PositiveIntegerField(
         verbose_name="Rating",
-        choices=[(i, str(i)) for i in range(1, 6)]  # Hodnocení od 1 do 5
+        choices=[
+            (1, '1 star'),
+            (2, '2 stars'),
+            (3, '3 stars'),
+            (4, '4 stars'),
+            (5, '5 stars')
+        ]
     )
-    comment = models.TextField(verbose_name="Comment")  # Text recenze
+    comment = models.TextField(verbose_name="Comment")
 
     def __str__(self):
         return f"Review by {self.name} for {self.location.name} - {self.rating} stars"

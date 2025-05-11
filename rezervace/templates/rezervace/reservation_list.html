@@ -11,10 +11,15 @@
     <ul>
         {% for reservation in reservations %}
         <li>
-            {{ reservation.name }} - {{ reservation.court.name }} - {{ reservation.date }} - {{ reservation.time_slot }}
+            {{ reservation.name }} - {{ reservation.location.name }} - {{ reservation.court.name }}
+            - {{ reservation.date }} - {{ reservation.time_slot }}
+
         </li>
         {% endfor %}
     </ul>
+    <p>
+        <a href="{% url 'select_location' %}">Create a Reservation</a> <!-- Updated link -->
+    </p>
     <p>
         <a href="{% url 'homepage' %}">Back to Homepage</a>
     </p>

@@ -10,13 +10,19 @@
 
     <!-- Links -->
     <p>
-        <a href="{% url 'create_reservation' %}">Make a Reservation</a>
+        <a href="{% url 'select_location' %}">Make a Reservation</a> <!-- Updated link -->
     </p>
     <p>
         <a href="{% url 'location_list' %}">List of Locations</a>
     </p>
     <p>
-        <a href="{% url 'tournament_list' %}">List of Tournaments</a> <!-- Přidání odkazu na seznam turnajů -->
+        <a href="{% url 'tournament_list' %}">List of Tournaments</a>
+    </p>
+    <p>
+        <a href="{% url 'review_list' %}">List of Reviews</a>
+    </p>
+    <p>
+        <a href="{% url 'reservation_list' %}">List of Reservations</a> <!-- New link -->
     </p>
 </body>
 
