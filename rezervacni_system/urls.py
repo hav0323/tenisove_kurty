@@ -20,6 +20,10 @@ from rezervace import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('locations/', include('rezervace.urls')),  # Přesměrování do aplikace rezervace
-    path('', views.homepage, name='home'),  # Nastavení prázdné cesty jako přístup k seznamu lokací
+    path('locations/', include('rezervace.urls')), 
+    path('', views.homepage, name='home'),
+    path('api/locations/', views.api_location_list, name='api_location_list'),
+    path('api/tournaments/', views.api_tournament_list, name='api_tournament_list'),
+    path('api/reservations/', views.api_reservation_list, name='api_reservation_list'),
+         
 ]

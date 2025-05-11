@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.core.serializers import serialize
 from .forms import ReservationForm, ReviewForm, TournamentRegistrationForm, CreateTournamentForm, CreateLocationForm, LocationFilterForm, SelectLocationForm
 from .models import Location, Court, Reservation, Tournament, Review
 
@@ -132,3 +133,17 @@ def select_location(request, next_view):
         form = SelectLocationForm()
     return render(request, 'rezervace/select_location.html', {'form': form})
 
+
+
+def api_location_list(request):
+    locations = Location.objects.all()
+    data = serialize('json', locations)
+    return JsonResponse(data, safe=False)
+def api_tournament_list(request):
+    tournaments = Tournament.objects.all()  # Načtení všech turnajů
+    data = serialize('json', tournaments, fields=('name', 'location', 'date', 'capacity'))
+    return JsonResponse(data, safe=False)  # Vrácení dat ve formátu JSON
+def api_reservation_list(request):
+    reservations = Reservation.objects.all()  # Načtení všech rezervací
+    data = serialize('json', reservations, fields=('court', 'date', 'time_slot', 'name', 'email'))
+    return JsonResponse(data, safe=False)  # Vrácení dat ve formátu JSON
