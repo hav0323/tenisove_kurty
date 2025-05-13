@@ -1,33 +1,32 @@
-<!DOCTYPE html>
-<html>
+{% extends 'rezervace/base.html' %}
 
-<head>
-    <title>List of Locations</title>
-</head>
+{% block title %}List of Locations{% endblock %}
 
-<body>
-    <h1>List of Locations</h1>
+{% block content %}
+<h1 class="mb-4">List of Locations</h1>
 
-    <!-- Formulář pro filtrování -->
-    <form method="get">
-        {{ form.as_p }}
-        <button type="submit">Filter</button>
-    </form>
+<!-- Formulář pro filtrování -->
+<form method="get" class="mb-4">
+    <div class="row g-3">
+        <div class="col-auto">
+            {{ form.as_p }}
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
 
-    <ul>
-        {% for location in locations %}
-        <li>
-            <a href="{% url 'location_detail' location.pk %}">{{ location.name }}</a> - {{ location.city }}
-        </li>
-        {% endfor %}
-    </ul>
+<ul class="list-group">
+    {% for location in locations %}
+    <li class="list-group-item">
+        <a href="{% url 'location_detail' location.pk %}">{{ location.name }}</a> - {{ location.city }}
+    </li>
+    {% endfor %}
+</ul>
 
-    <p>
-        <a href="{% url 'create_location' %}">Create a Location</a>
-    </p>
-    <p>
-        <a href="{% url 'homepage' %}">Back to Homepage</a>
-    </p>
-</body>
-
-</html>
+<div class="mt-4">
+    <a href="{% url 'create_location' %}" class="btn btn-success">Create a Location</a>
+    <a href="{% url 'homepage' %}" class="btn btn-secondary">Back to Homepage</a>
+</div>
+{% endblock %}

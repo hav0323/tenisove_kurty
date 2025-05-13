@@ -1,36 +1,31 @@
-<!DOCTYPE html>
-<html>
+{% extends 'rezervace/base.html' %}
 
-<head>
-    <title>{{ location.name }}</title>
-</head>
+{% block title %}{{ location.name }}{% endblock %}
 
-<body>
-    <h1>{{ location.name }}</h1>
+{% block content %}
+<h1 class="mb-4">{{ location.name }}</h1>
+
+<div class="mb-4">
     <p><strong>Address:</strong> {{ location.address }}</p>
     <p><strong>City:</strong> {{ location.city }}</p>
     <p><strong>Clay Courts:</strong> {{ location.clay_courts }}</p>
     <p><strong>Grass Courts:</strong> {{ location.grass_courts }}</p>
     <p><strong>Hard Courts:</strong> {{ location.hard_courts }}</p>
+</div>
 
-    <h2>Reviews</h2>
-    <ul>
-        {% for review in location.reviews.all %}
-        <li>
-            <strong>{{ review.name }}</strong> ({{ review.rating }} stars): {{ review.comment }}
-            <br>
-        </li>
-        {% empty %}
-        <li>No reviews yet. Be the first to write one below!</li>
-        {% endfor %}
-    </ul>
-    <p>
-        <a href="{% url 'write_review' location.pk %}">Write a Review for This Location</a>
-    </p>
+<h2 class="mb-3">Reviews</h2>
+<ul class="list-group mb-4">
+    {% for review in location.reviews.all %}
+    <li class="list-group-item">
+        <strong>{{ review.name }}</strong> ({{ review.rating }} stars): {{ review.comment }}
+    </li>
+    {% empty %}
+    <li class="list-group-item">No reviews yet. Be the first to write one below!</li>
+    {% endfor %}
+</ul>
 
-    <p>
-        <a href="{% url 'location_list' %}">Back to List of Locations</a>
-    </p>
-</body>
-
-</html>
+<div class="mt-4">
+    <a href="{% url 'write_review' location.pk %}" class="btn btn-success">Write a Review for This Location</a>
+    <a href="{% url 'location_list' %}" class="btn btn-secondary">Back to List of Locations</a>
+</div>
+{% endblock %}

@@ -1,28 +1,22 @@
 <!-- filepath: /Users/jirihavlicek/school/4semestr/skj/Projekt/rezervacni_system/rezervace/templates/rezervace/reservation_list.html -->
-<!DOCTYPE html>
-<html>
+{% extends 'rezervace/base.html' %}
 
-<head>
-    <title>Reservation List</title>
-</head>
+{% block title %}Reservation List{% endblock %}
 
-<body>
-    <h1>Reservation List</h1>
-    <ul>
-        {% for reservation in reservations %}
-        <li>
-            {{ reservation.name }} - {{ reservation.location.name }} - {{ reservation.court.name }}
-            - {{ reservation.date }} - {{ reservation.time_slot }}
+{% block content %}
+<h1 class="mb-4">Reservation List</h1>
 
-        </li>
-        {% endfor %}
-    </ul>
-    <p>
-        <a href="{% url 'select_location_reservation' %}">Create a Reservation</a> <!-- Updated link -->
-    </p>
-    <p>
-        <a href="{% url 'homepage' %}">Back to Homepage</a>
-    </p>
-</body>
+<ul class="list-group">
+    {% for reservation in reservations %}
+    <li class="list-group-item">
+        {{ reservation.name }} - {{ reservation.location.name }} - {{ reservation.court.name }}
+        - {{ reservation.date }} - {{ reservation.time_slot }}
+    </li>
+    {% endfor %}
+</ul>
 
-</html>
+<div class="mt-4">
+    <a href="{% url 'select_location_reservation' %}" class="btn btn-success">Create a Reservation</a>
+    <a href="{% url 'homepage' %}" class="btn btn-secondary">Back to Homepage</a>
+</div>
+{% endblock %}

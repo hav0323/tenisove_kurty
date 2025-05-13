@@ -1,29 +1,15 @@
-<!DOCTYPE html>
-<html>
+{% extends 'rezervace/base.html' %}
 
-<head>
-    <title>Tennis Reservation System</title>
-</head>
+{% block title %}Tennis Reservation System{% endblock %}
 
-<body>
-    <h1>Tennis Reservation System</h1>
+{% block content %}
+<h1 class="mb-4">Tennis Reservation System</h1>
 
-    <!-- Links -->
-    <p>
-        <a href="{% url 'select_location_reservation' %}">Make a Reservation</a> <!-- Updated link -->
-    </p>
-    <p>
-        <a href="{% url 'location_list' %}">List of Locations</a>
-    </p>
-    <p>
-        <a href="{% url 'tournament_list' %}">List of Tournaments</a>
-    </p>
-    <p>
-        <a href="{% url 'review_list' %}">List of Reviews</a>
-    </p>
-    <p>
-        <a href="{% url 'reservation_list' %}">List of Reservations</a> <!-- New link -->
-    </p>
-</body>
-
-</html>
+<div class="list-group">
+    <a href="{% url 'select_location_reservation' %}" class="list-group-item list-group-item-action">Make a Reservation</a>
+    <a href="{% url 'location_list' %}" class="list-group-item list-group-item-action">List of Locations</a>
+    <a href="{% url 'tournament_list' %}" class="list-group-item list-group-item-action">List of Tournaments</a>
+    <a href="{% url 'review_list' %}" class="list-group-item list-group-item-action">List of Reviews</a>
+    <a href="{% url 'reservation_list' %}" class="list-group-item list-group-item-action">List of Reservations</a>
+</div>
+{% endblock %}

@@ -1,26 +1,21 @@
-<!DOCTYPE html>
-<html>
+{% extends 'rezervace/base.html' %}
 
-<head>
-    <title>Tournament List</title>
-</head>
+{% block title %}Tournament List{% endblock %}
 
-<body>
-    <h1>Tournament List</h1>
-    <ul>
-        {% for tournament in tournaments %}
-        <li>
-            <a href="{% url 'tournament_detail' tournament.pk %}">{{ tournament.name }}</a>,
-            {{ tournament.location.name }} ({{ tournament.date }})
-        </li>
-        {% endfor %}
-    </ul>
-    <p>
-        <a href="{% url 'create_tournament' %}">Create a Tournament</a>
-    </p>
-    <p>
-        <a href="{% url 'homepage' %}">Back to Homepage</a> <!-- Přidání odkazu na hlavní stránku -->
-    </p>
-</body>
+{% block content %}
+<h1 class="mb-4">Tournament List</h1>
 
-</html>
+<ul class="list-group">
+    {% for tournament in tournaments %}
+    <li class="list-group-item">
+        <a href="{% url 'tournament_detail' tournament.pk %}">{{ tournament.name }}</a>,
+        {{ tournament.location.name }} ({{ tournament.date }})
+    </li>
+    {% endfor %}
+</ul>
+
+<div class="mt-4">
+    <a href="{% url 'create_tournament' %}" class="btn btn-success">Create a Tournament</a>
+    <a href="{% url 'homepage' %}" class="btn btn-secondary">Back to Homepage</a>
+</div>
+{% endblock %}

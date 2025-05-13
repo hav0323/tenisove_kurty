@@ -1,30 +1,22 @@
-<!DOCTYPE html>
-<html>
+{% extends 'rezervace/base.html' %}
 
-<head>
-    <title>Review List</title>
-</head>
+{% block title %}Review List{% endblock %}
 
-<body>
-    <h1>Review List</h1>
-    <ul>
-        {% for review in reviews %}
-        <li>
-            <strong>{{ review.name }}</strong> ({{ review.rating }} stars) - {{ review.location.name }}
-            <br>
-            {{ review.comment }}
-            <br>
-        </li>
-        {% empty %}
-        <li>No reviews available.</li>
-        {% endfor %}
-    </ul>
-    <p>
-        <a href="{% url 'select_location_review' %}">Write a Review</a>
-    </p>
-    <p>
-        <a href="{% url 'homepage' %}">Back to Homepage</a>
-    </p>
-</body>
+{% block content %}
+<h1 class="mb-4">Review List</h1>
 
-</html>
+<ul class="list-group">
+    {% for review in reviews %}
+    <li class="list-group-item">
+        <strong>{{ review.name }}</strong> ({{ review.rating }} stars) - {{ review.location.name }}
+        <br>
+        {{ review.comment }}
+    </li>
+    {% empty %}
+    <li class="list-group-item">No reviews available.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'select_location_review' %}" class="btn btn-success mt-3">Write a Review</a>
+<a href="{% url 'homepage' %}" class="btn btn-secondary mt-3">Back to Homepage</a>
+{% endblock %}
