@@ -15,7 +15,11 @@ urlpatterns = [
     path('reservations/new/<int:location_id>/', views.create_reservation, name='create_reservation'),
     path('reviews/select-location/', views.select_location, {'next_view': 'write_review'}, name='select_location_review'),
     path('reviews/write/<int:location_id>/', views.write_review, name='write_review'),
+    
+    
+    
     path('api/locations/', views.api_location_list, name='api_location_list'),
     path('api/tournaments/', views.api_tournament_list, name='api_tournament_list'),
     path('api/reservations/', views.api_reservation_list, name='api_reservation_list'),
+
 ]

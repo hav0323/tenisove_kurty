@@ -1,0 +1,9 @@
+<!-- filepath: /Users/jirihavlicek/school/4semestr/skj/Projekt/rezervacni_system/rezervace/templates/registration/logged_out.html -->
+{% extends 'rezervace/base.html' %}
+
+{% block title %}Logged Out{% endblock %}
+
+{% block content %}
+<h1>You have been logged out</h1>
+<p>Thank you for visiting. <a href="{% url 'login' %}">Log in again</a>.</p>
+{% endblock %}

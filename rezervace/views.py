@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.core.serializers import serialize
+from django.contrib.auth.decorators import login_required
 from .forms import ReservationForm, ReviewForm, TournamentRegistrationForm, CreateTournamentForm, CreateLocationForm, LocationFilterForm, SelectLocationForm
 from .models import Location, Court, Reservation, Tournament, Review
 
 # Create your views here
 
+@login_required
 def location_list(request):
     form = LocationFilterForm(request.GET)  # Zpracování GET požadavku
     locations = Location.objects.all()
@@ -18,6 +20,7 @@ def location_list(request):
 
     return render(request, 'rezervace/location_list.html', {'locations': locations, 'form': form})
 
+@login_required
 def location_detail(request, pk):
     # Načtení konkrétní lokace podle primárního klíče (pk)
     location = get_object_or_404(Location, pk=pk)
@@ -32,6 +35,7 @@ def location_detail(request, pk):
         form = ReviewForm()
     return render(request, 'rezervace/location_detail.html', {'location': location, 'form': form})
 
+@login_required
 def create_reservation(request, location_id=None):
     if location_id is None:
         # Redirect to the Select Location page if location_id is missing
@@ -51,34 +55,34 @@ def create_reservation(request, location_id=None):
 def homepage(request):
     return render(request, 'rezervace/homepage.html')
 
-
+@login_required
 def reservation_list(request):
     reservations = Reservation.objects.all()  # Načtení všech rezervací
     return render(request, 'rezervace/reservation_list.html', {'reservations': reservations})
 
+@login_required
 def tournament_list(request):
     tournaments = Tournament.objects.all()
     return render(request, 'rezervace/tournament_list.html', {'tournaments': tournaments})
 
+@login_required
 def tournament_detail(request, pk):
     tournament = get_object_or_404(Tournament, pk=pk)
+
     if request.method == 'POST':
-        form = TournamentRegistrationForm(request.POST)
+        form = TournamentRegistrationForm(request.POST, tournament=tournament)
         if form.is_valid():
             participant = form.save(commit=False)
-            if tournament.participants.count() < tournament.capacity:
-                participant.tournament = tournament
-                participant.save()
-                return redirect('tournament_detail', pk=tournament.pk)
-            else:
-                return render(request, 'rezervace/tournament_detail.html', {
-                    'tournament': tournament,
-                    'form': form,
-                    'error': 'The tournament is full.'
-                })
+            participant.tournament = tournament
+            participant.save()
+            return redirect('tournament_detail', pk=tournament.pk)
     else:
-        form = TournamentRegistrationForm()
-    return render(request, 'rezervace/tournament_detail.html', {'tournament': tournament, 'form': form})
+        form = TournamentRegistrationForm(tournament=tournament)
+
+    return render(request, 'rezervace/tournament_detail.html', {
+        'tournament': tournament,
+        'form': form,
+    })
 
 def review_list(request):
     reviews = Review.objects.all()  # Načtení všech recenzí

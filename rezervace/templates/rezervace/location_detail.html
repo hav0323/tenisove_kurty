@@ -11,6 +11,13 @@
     <p><strong>Clay Courts:</strong> {{ location.clay_courts }}</p>
     <p><strong>Grass Courts:</strong> {{ location.grass_courts }}</p>
     <p><strong>Hard Courts:</strong> {{ location.hard_courts }}</p>
+    <p><strong>Average Review Score:</strong> 
+        {% if location.average_review_score %}
+            {{ location.average_review_score }} / 5
+        {% else %}
+            No reviews yet
+        {% endif %}
+    </p>
 </div>
 
 <h2 class="mb-3">Reviews</h2>
@@ -26,6 +33,7 @@
 
 <div class="mt-4">
     <a href="{% url 'write_review' location.pk %}" class="btn btn-success">Write a Review for This Location</a>
+    <a href="{% url 'create_reservation' location.pk %}" class="btn btn-primary">Make a Reservation</a>
     <a href="{% url 'location_list' %}" class="btn btn-secondary">Back to List of Locations</a>
 </div>
 {% endblock %}

@@ -1,13 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Avg
 
 class Location(models.Model):
-    name = models.CharField(max_length=100)  # Název střediska
-    address = models.CharField(max_length=255)  # Adresa střediska
-    city = models.CharField(max_length=100)  # Město
-    clay_courts = models.PositiveIntegerField(default=0)  # Počet antukových kurtů
-    grass_courts = models.PositiveIntegerField(default=0)  # Počet travnatých kurtů
-    hard_courts = models.PositiveIntegerField(default=0)  # Počet kurtů s tvrdým povrchem
+    name = models.CharField(max_length=100, verbose_name="Name")
+    address = models.CharField(max_length=255, verbose_name="Address")
+    city = models.CharField(max_length=100, verbose_name="City")
+    clay_courts = models.IntegerField(default=0, verbose_name="Clay Courts")
+    grass_courts = models.IntegerField(default=0, verbose_name="Grass Courts")
+    hard_courts = models.IntegerField(default=0, verbose_name="Hard Courts")
 
     def save(self, *args, **kwargs):
         # Zkontrolujeme, zda se jedná o nové středisko
@@ -25,8 +26,13 @@ class Location(models.Model):
                 courts.append(Court(location=self, name=f"Hard Court {i + 1}", surface="Hard"))
             Court.objects.bulk_create(courts)  # Vytvoříme všechny kurty najednou
 
+    def average_review_score(self):
+        # Calculate the average rating of all reviews for this location
+        avg_score = self.reviews.aggregate(Avg('rating'))['rating__avg']
+        return round(avg_score, 1) if avg_score else None  # Return None if no reviews exist
+
     def __str__(self):
-        return f"{self.name} ({self.city})"
+        return self.name
 
 
 class Court(models.Model):
